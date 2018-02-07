@@ -29,7 +29,7 @@ NUM_CLASSES = 10
 IMAGE_SIZE = 28
 IMAGE_PIXELS = IMAGE_SIZE * IMAGE_SIZE
 
-
+#尽可能地构建好图表，满足促使神经网络向前反馈并做出预测的要求。
 def inference(images, hidden1_units, hidden2_units):
   """Build the MNIST model up to where it may be used for inference.
 
@@ -70,7 +70,7 @@ def inference(images, hidden1_units, hidden2_units):
     logits = tf.matmul(hidden2, weights) + biases
   return logits
 
-
+#往inference图表中添加生成损失（loss）所需要的操作（ops）。
 def loss(logits, labels):
   """Calculates the loss from the logits and the labels.
 
@@ -84,7 +84,7 @@ def loss(logits, labels):
   labels = tf.to_int64(labels)
   return tf.losses.sparse_softmax_cross_entropy(labels=labels, logits=logits)
 
-
+#往损失图表中添加计算并应用梯度（gradients）所需的操作。
 def training(loss, learning_rate):
   """Sets up the training Ops.
 
