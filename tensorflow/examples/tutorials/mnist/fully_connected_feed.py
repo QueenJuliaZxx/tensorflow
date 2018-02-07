@@ -126,18 +126,21 @@ def run_training():
     eval_correct = mnist.evaluation(logits, labels_placeholder)
 
     # Build the summary Tensor based on the TF collection of Summaries.
+    #为了释放TensorBoard所使用的事件文件（events file），所有的即时数据（在这里只有一个）都要在图表构建阶段合并至一个操作（op）中。
     summary = tf.summary.merge_all()
 
     # Add the variable initializer Op.
     init = tf.global_variables_initializer()
 
     # Create a saver for writing training checkpoints.
+    #可以用来后续恢复模型以进一步训练或评估的检查点文件（checkpoint file），实例化一个tf.train.Saver
     saver = tf.train.Saver()
 
     # Create a session for running Ops on the Graph.
     sess = tf.Session()
 
     # Instantiate a SummaryWriter to output summaries and the Graph.
+    #实例化一个tf.train.SummaryWriter ，用于写入包含了图表本身和即时数据具体值的事件文件。
     summary_writer = tf.summary.FileWriter(FLAGS.log_dir, sess.graph)
 
     # And then after everything is built:
@@ -146,6 +149,7 @@ def run_training():
     sess.run(init)
 
     # Start the training loop.
+    #检查状态
     for step in xrange(FLAGS.max_steps):
       start_time = time.time()
 
@@ -170,6 +174,7 @@ def run_training():
         # Print status to stdout.
         print('Step %d: loss = %.2f (%.3f sec)' % (step, loss_value, duration))
         # Update the events file.
+        #每次运行summary_op 时，都会往事件文件中写入最新的即时数据，函数的输出会传入事件文件读写器（writer）的add_summary() 函数。。
         summary_str = sess.run(summary, feed_dict=feed_dict)
         summary_writer.add_summary(summary_str, step)
         summary_writer.flush()
