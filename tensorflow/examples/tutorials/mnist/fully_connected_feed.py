@@ -1,17 +1,4 @@
-# Copyright 2015 The TensorFlow Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
+
 
 """Trains and Evaluates the MNIST network using a feed dictionary."""
 from __future__ import absolute_import
@@ -34,6 +21,8 @@ from tensorflow.examples.tutorials.mnist import mnist
 FLAGS = None
 
 
+  #placeholder_inputs() 函数将生成两个tf.placeholder 操作，定义传入图表中的shape参数，shape参数中包括batch_size 值，后续还会将实际的训练用例传入图表。
+  #atch_size 值，后续还会将实际的训练用例传入图表。
 def placeholder_inputs(batch_size):
   """Generate placeholder variables to represent the input tensors.
 
@@ -47,9 +36,6 @@ def placeholder_inputs(batch_size):
     images_placeholder: Images placeholder.
     labels_placeholder: Labels placeholder.
   """
-  # Note that the shapes of the placeholders match the shapes of the full
-  # image and label tensors, except the first dimension is now batch_size
-  # rather than the full size of the train or test data sets.
   images_placeholder = tf.placeholder(tf.float32, shape=(batch_size,
                                                          mnist.IMAGE_PIXELS))
   labels_placeholder = tf.placeholder(tf.int32, shape=(batch_size))
